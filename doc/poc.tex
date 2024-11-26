@@ -46,8 +46,8 @@
 \pagestyle{firstpage}
 
 \section{Wstęp}
-Celem projektu było zaproponowanie architektury systemu informatycznego, który pozwala na klasyfikację obrazów RTG klatki piersiowej z wykorzystaniem sieci neuronowych.
-System ma wspomagać lekarzy w diagnostyce chorób poprzez automatyczną klasyfikację obrazów, a także dostarczać informacji o tym, jakie cechy obrazu zostały wykorzystane do podjęcia decyzji.
+Celem projektu było opracowanie architektury systemu informatycznego, który pozwala na klasyfikację obrazów RTG klatki piersiowej z wykorzystaniem sieci neuronowych.
+System ma wspierać lekarzy w diagnostyce chorób poprzez automatyczną klasyfikację obrazów, a także dostarczać informacji o tym, jakie cechy obrazu zostały wykorzystane do podjęcia decyzji.
 
 Głównym założeniem projektu nie jest stworzenie dokładnych modeli, ale eksploracja zagadnienia Explainable AI (XAI) \cite{gunning2019xai,barredoarrieta2020explainable} i możliwości implementacji mechanizmów XAI w aplikacjach dla użytkownika końcowego.
 
@@ -90,7 +90,7 @@ Serwer, w zależności od stopnia eksploatacji, może zostać zaimplementowany w
 \section{Proof-Of-Concept}
 Proof-Of-Concept (PoC) został zaimplementowany w języku Python z wykorzystaniem biblioteki PyTorch. Kod źródłowy jest dostępny jako załącznik do raportu i może być uruchomiony na dowolnej maszynie z zainstalowanym środowiskiem Python i Jupyter.
 
-Prototyp pokazuje w jaki sposób można wykorzystać mechnizm Gradient CAM (Class Activation Mapping) \cite{selvaraju2017gradcam} do wizualizacji aktywacji w sieciach konwolucyjnych.
+Prototyp ilustruje, w jaki sposób można wykorzystać mechnizm Gradient CAM (Class Activation Mapping) \cite{selvaraju2017gradcam} do wizualizacji aktywacji w sieciach konwolucyjnych.
 W ramach prototypu zrealizowano:
 \begin{enumerate}
   \item Przygotowanie zbioru danych
@@ -128,17 +128,36 @@ Dostosowany model osiągnął jakość klasyfikacji na poziomie 0.5 AUROC, co je
 
 Do wizualizacji aktywacji w wykorzystano mechanizm Gradient CAM (Class Activation Mapping) \cite{selvaraju2017gradcam}.
 Pierwszym krokiem działania mechanizmu jest wybór ostatniej warstwy konwolucyjnej w modelu, która zawiera informacje o lokalizacji cech w obrazie.
-Następnie obliczane są gradienty aktywacji w tej warstwie względem klasy docelowej, co pozwala na określenie, które obszary obrazu były najbardziej istotne dla klasyfikacji.
+Następnie obliczane są gradienty aktywacji względem klasy docelowej w tej warstwie, co pozwala na określenie, które obszary obrazu były najbardziej istotne dla klasyfikacji.
 Obliczone gradienty są następnie agregowane w celu uzyskania mapy aktywacji, która jest nakładana na obraz wejściowy.
 
 Do realizacji wizualizacji aktywacji wykorzystano biblioteki PyTorch, PIL.Image oraz pytorch\_gradcam.
-W ramach prototupu możliwa jest wizualizacja aktywacji dla dowolnego obrazu RTG klatki piersiowej w obrębie wszystkich 14stu klas dostępnych w zbiorze danych CheXpert.
+W ramach prototypu możliwa jest wizualizacja aktywacji dla dowolnego obrazu RTG klatki piersiowej w obrębie wszystkich 14stu klas dostępnych w zbiorze danych CheXpert.
 
 Ponieważ prototyp jest oparty o model o niskiej jakości, wizualizacje aktywacji nie są wiarygodne i nie nadają się do zastosowań diagnostycznych.
 Efektywnie, prototyp pokazuje jedynie w jaki sposób można zaimplementować mechanizm GradCAM w sieciach konwolucyjnych oraz jakiego rodzaju wyników należy oczekiwać i przetwarzać w warstwie prezentacji.
 
 \section{Wizualizacja warstwy prezentacji systemu}
-\textit{Tutaj mockupy}
+Rysunki \ref{fig:start} i \ref{fig:results} przedstawiają wizualizację warstwy prezentacji systemu wykonaną za pomocą narzędzia Figma.
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=\textwidth]{images/Widok startowy.png}
+  }
+  \caption{Ekran startowy aplikacji}
+  \label{fig:start}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=\textwidth]{images/Wynik.png}
+  }
+  \caption{Ekran prezentacji wyników}
+  \label{fig:results}
+\end{figure}
+
 
 \section{Analiza wyzwań związanych z wdrożeniem systemu}
 Wprowadzenie aplikacji wspomagającej diagnostykę chorób klatki piersiowej z wykorzystaniem Explainable AI (XAI) wiąże się z istotnymi wyzwaniami etycznymi i prawnymi. Kluczowe obszary to:
