@@ -1,4 +1,11 @@
+
 # Proof-Of-Concept
+## Nawigacja
+
+- [POC Chexpert](resnet_chexpert.ipynb)
+- [POC ResNet50](resnet_gradcam.ipynb)
+
+## Opis
 
 Proof-Of-Concept (PoC) został zaimplementowany w języku Python z wykorzystaniem biblioteki PyTorch. Kod źródłowy jest dostępny jako załącznik do raportu i może być uruchomiony na dowolnej maszynie z zainstalowanym środowiskiem Python i Jupyter.
 
