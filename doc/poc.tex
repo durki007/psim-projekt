@@ -47,7 +47,7 @@
 
 \section{Wstęp}
 Celem projektu było opracowanie architektury systemu informatycznego, który pozwala na klasyfikację obrazów RTG klatki piersiowej z wykorzystaniem sieci neuronowych.
-System ma wspierać lekarzy w diagnostyce chorób poprzez automatyczną klasyfikację obrazów, a także dostarczać informacji o tym, jakie cechy obrazu zostały wykorzystane do podjęcia decyzji.
+System ma wspierać lekarzy w~diagnostyce chorób poprzez automatyczną klasyfikację obrazów, a także dostarczać informacji o tym, jakie cechy obrazu zostały wykorzystane do podjęcia decyzji.
 
 Głównym założeniem projektu nie jest stworzenie dokładnych modeli, ale eksploracja zagadnienia Explainable AI (XAI) \cite{gunning2019xai,barredoarrieta2020explainable} i możliwości implementacji mechanizmów XAI w aplikacjach dla użytkownika końcowego.
 
@@ -57,7 +57,7 @@ W szczególności problematyczny jest brak zrozumienia mechanizmów decyzyjnych 
 
 Efektywne \emph{XAI} może pomóc w budowaniu zaufania i transparentości modeli dla użytkowników końcowych (pacjentów i lekarzy),
 a co za tym idzie, znacząco przyspieszyć procesy diagnostyczne \cite{amann2020explainability}.
-Ponadto wykorzystanie modeli głębokich w medycynie otwiera nowe możliwości w przygotowaniu spersonalizowanych planów terapii,
+Ponadto wykorzystanie sieci głębokich w medycynie otwiera nowe możliwości w przygotowaniu spersonalizowanych planów terapii,
 co może znacząco poprawić jakość życia pacjentów \cite{allen2024promise}.
 
 \subsection{Zakres projektu}
@@ -132,10 +132,13 @@ Następnie obliczane są gradienty aktywacji względem klasy docelowej w tej war
 Obliczone gradienty są następnie agregowane w celu uzyskania mapy aktywacji, która jest nakładana na obraz wejściowy.
 
 Do realizacji wizualizacji aktywacji wykorzystano biblioteki PyTorch, PIL.Image oraz pytorch\_gradcam.
-W ramach prototypu możliwa jest wizualizacja aktywacji dla dowolnego obrazu RTG klatki piersiowej w obrębie wszystkich 14stu klas dostępnych w zbiorze danych CheXpert.
+W ramach prototypu możliwa jest wizualizacja aktywacji dla dowolnego obrazu RTG klatki piersiowej w~obrębie wszystkich 14stu klas dostępnych w zbiorze danych CheXpert.
 
 Ponieważ prototyp jest oparty o model o niskiej jakości, wizualizacje aktywacji nie są wiarygodne i nie nadają się do zastosowań diagnostycznych.
 Efektywnie, prototyp pokazuje jedynie w jaki sposób można zaimplementować mechanizm GradCAM w sieciach konwolucyjnych oraz jakiego rodzaju wyników należy oczekiwać i przetwarzać w warstwie prezentacji.
+
+Mechanizm GradCAM został przetestowany również na bazowym modelu ResNet50, gdzie działał poprawnie, co potwierdza poprawność implementacji.
+Brak satysfakcjonujących wyników (wizualizacji) w~PoC jest prawdopodobnie spowodowany niską precyzyjnością modelu.
 
 \section{Wizualizacja warstwy prezentacji systemu}
 Rysunki \ref{fig:start} i \ref{fig:results} przedstawiają wizualizację warstwy prezentacji systemu wykonaną za pomocą narzędzia Figma.
@@ -166,8 +169,18 @@ Wprowadzenie aplikacji wspomagającej diagnostykę chorób klatki piersiowej z w
   \item \textbf{Zgodność z RODO w przypadku przetwarzania danych osobowych:} RODO nakłada na administratorów danych obowiązek informowania pacjentów o celach i podstawach prawnych przetwarzania ich danych, a także o przysługujących im prawach. W przypadku aplikacji diagnostycznej konieczne jest spełnienie obowiązku informacyjnego wobec użytkowników oraz zapewnienie możliwości realizacji ich praw, takich jak prawo dostępu do danych czy ich sprostowania.
   \item \textbf{Ryzyko błędów klasyfikacji oraz wpływ takich błędów na decyzje diagnostyczne lekarzy:} Algorytmy AI mogą popełniać błędy, które w kontekście medycznym mogą prowadzić do poważnych konsekwencji dla pacjentów. Zgodnie z art. 4 ustawy o zawodach lekarza i lekarza dentysty, lekarz ma obowiązek wykonywać zawód zgodnie ze wskazaniami aktualnej wiedzy medycznej oraz z należytą starannością. Dlatego aplikacja powinna być traktowana jedynie jako narzędzie wspomagające, a ostateczna decyzja diagnostyczna powinna należeć do lekarza.
   \item \textbf{Transparentność działania modelu dzięki mechanizmom XAI:} Wykorzystanie mechanizmów XAI pozwala na wyjaśnienie decyzji podejmowanych przez model AI, co zwiększa zaufanie użytkowników do systemu. Transparentność działania algorytmu jest kluczowa, aby lekarze mogli zrozumieć podstawy decyzji i ocenić ich wiarygodność.
-  \item \textbf{Ograniczenie aplikacji do narzędzia wspomagającego, a nie zastępującego lekarza w procesie diagnozy:} Zgodnie z art. 37 ustawy o zawodach lekarza i lekarza dentysty, w razie wątpliwości diagnostycznych lekarz powinien zasięgnąć opinii właściwego specjalisty lub zorganizować konsylium lekarskie. Aplikacja powinna być traktowana jako wsparcie w procesie diagnostycznym, a nie jako zastępstwo dla profesjonalnej oceny medycznej. Lekarz ponosi odpowiedzialność za ostateczną diagnozę i leczenie pacjenta.
+  \item \textbf{Ograniczenie aplikacji do narzędzia wspomagającego, a nie zastępującego lekarza w~procesie diagnozy:} Zgodnie z art. 37 ustawy o zawodach lekarza i lekarza dentysty, w razie wątpliwości diagnostycznych lekarz powinien zasięgnąć opinii właściwego specjalisty lub zorganizować konsylium lekarskie. Aplikacja powinna być traktowana jako wsparcie w procesie diagnostycznym, a nie jako zastępstwo dla profesjonalnej oceny medycznej. Lekarz ponosi odpowiedzialność za ostateczną diagnozę i leczenie pacjenta.
 \end{itemize}
+
+\section{Podsumowanie}
+
+W ramach projektu, przeanalizowano możliwości zastosowania prostych mechanizmów XAI w aplikacjach medycznych.
+Wdrożenie prostego systemu klasyfikacji obrazów medycznych z funkcją wizualizacji aktywacji nie jest wymagające technicznie, ale wiąże się z istotnymi wyzwaniami etycznymi i prawnymi.
+System o proponowanej architekturze nadaje się do wdrożenia w środowisku produkcyjnym, ale wymaga znaczącego rozwoju w zakresie jakości modeli.
+Ponadto, w ramach projektu nie zostały rozważone wymagania związane z bezpieczeństwem i niezawodnością systemu, które są kluczowe w zastosowaniach medycznych.
+
+W obecnym środowisku regulacyjnym modele AI w medycynie, nawet stosujące techniki XAI, nie mogą zastępować decyzji lekarzy.
+System może służyć jedynie jako narzędzie wspomagające, które dostarcza informacji o procesie decyzyjnym modelu, ale ostateczna decyzja diagnostyczna musi zostać podjęta przez radiologa.
 
 \newpage
 \printbibliography
